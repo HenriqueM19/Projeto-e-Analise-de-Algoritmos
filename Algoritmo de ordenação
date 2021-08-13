@@ -1,0 +1,57 @@
+#include <iostream>
+#include <clocale>
+using namespace std;
+#define MaxTam 15
+
+int particiona(int *A, int inicio, int fim){
+    int esq, dir, pivo, aux;
+    esq = inicio;
+    dir = fim;
+    pivo = A[inicio];
+    while(esq < dir){
+        while(esq <= fim && A[esq]<= pivo){
+            esq++;
+        }
+        while(dir >= 0 && A[dir]>pivo){
+            dir--;
+        }
+        if(esq<dir){
+            aux = A[esq];
+            A[esq] = A[dir];
+            A[dir] = aux;
+        }
+    }
+    A[inicio] = A[dir];
+    A[dir] = pivo;
+    return dir;
+}
+
+void quick_sort(int *A, int inicio, int fim) {
+    int pivo;
+
+    if(inicio < fim) {
+        pivo = particiona(A, inicio, fim);
+        quick_sort(A, inicio, pivo-1);
+        quick_sort(A, pivo+1, fim);
+    }
+}
+int main(){
+
+
+    int A[MaxTam]={9 , 10 , -1, 3, 6, 2, 1, -3, 1, 0, -2, 15, 8, -7, 0};
+
+    cout << "A = ";
+
+    for(int i=0;i<MaxTam;i++){
+        cout << A[i] <<", ";
+    }
+
+    quick_sort(A,0,MaxTam-1);
+
+    cout << endl << "A = ";
+
+    for(int i=0;i<MaxTam;i++){
+        cout<< A[i] <<", ";
+    }
+    return 0;
+}
